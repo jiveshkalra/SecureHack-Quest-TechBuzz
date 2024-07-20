@@ -1,0 +1,6 @@
+1. Making the blog website frontend (use as much bootstap and tailwind as you can)
+2. Make a account system, so anyone can post their blogs  (frontend + backend) 
+3. Make a comment system
+4. ADMIN Panel IF TIME ALLOWS
+
+ALL THIS WHILE ONLY USING PYTHON N SQL
