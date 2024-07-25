@@ -5,3 +5,4 @@ UI of login and register page left
 admin panels login page left 
 admin panel setup left 
 
+readme!!
