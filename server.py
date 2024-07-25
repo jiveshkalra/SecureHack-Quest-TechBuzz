@@ -1,26 +1,15 @@
 from flask import Flask, render_template
-import mysql.connector
+from mysql_db_config import get_db
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="12345678",
-    database="secure_hack"
-)
-
-
+mydb = get_db()
 app = Flask(__name__)
 
 
 @app.route("/")
-def index():
-
-    mycursor = mydb.cursor()
-
-    mycursor.execute("SELECT * FROM blogs")
-
-    blogs_data = mycursor.fetchall()
-
+def index(): 
+    mycursor = mydb.cursor()   
+    mycursor.execute("SELECT * FROM blogs") 
+    blogs_data = mycursor.fetchall() 
     return render_template('index.html', blogs_data=blogs_data)
 
 
