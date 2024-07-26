@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template,request
 from mysql_db_config import get_db 
  
 mydb = get_db()
@@ -18,6 +18,17 @@ def login():
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
+
+@app.route("/adminPageDontComeHereImWarningYou")
+def adminPageDontComeHereImWarningYou():
+    return render_template('admin.html')
+
+@app.route("/adminPage", method=["POST"])
+def adminPage():
+    if request.form.passcode == "Priyanshu is the best coder!!!":
+        return render_template("actualAdmin.html")
+    else:
+        return redirect('/adminPageDontComeHereImWarningYou')
 
 @app.route("/blogs/<blog_url>")
 def blog(blog_url): 
