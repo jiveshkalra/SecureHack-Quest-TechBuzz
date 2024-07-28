@@ -1,52 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecuerHack Blogs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      if (
+        new URLSearchParams(location.search).get("passcode") !=
+          "PriyanshuIsBoss" &&
+        window.localStorage.getItem("DidAdminLogInOnThisSystem") != "TRUE"
+      ) {
+        window.location = window.location.origin + "/admin/login";
+      } else {
+        window.localStorage.setItem("DidAdminLogInOnThisSystem", "TRUE");
+      }
+      if (window.localStorage.getItem("DidAdminLogInOnThisSystem") == "TRUE") {
+        localStorage.setItem(
+          "uses",
+          parseInt(
+            localStorage.getItem("uses") ? localStorage.getItem("uses") : 0
+          ) + 1
+        );
+      }
+      if (parseInt(localStorage.getItem("uses")) >= 4) {
+        window.localStorage.setItem("DidAdminLogInOnThisSystem", "FALSE");
+        window.localStorage.setItem("uses", "1");
+      }
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecuerHack Blogs</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    if(new URLSearchParams(location.search).get('Passcode') != "PriyanshuIsBoss" && window.localStorage.getItem('DidAdminLogInOnThisSystem') != "TRUE"){window.location = window.location.origin + '/adminPage'}else{window.localStorage.setItem('DidAdminLogInOnThisSystem', "TRUE");}
-    if(window.localStorage.getItem('DidAdminLogInOnThisSystem') == "TRUE"){
-      localStorage.setItem('uses', parseInt(localStorage.getItem('uses')?localStorage.getItem('uses'):0) + 1)
-    }
-    if(parseInt(localStorage.getItem('uses')) >= 4){
-      window.localStorage.setItem('DidAdminLogInOnThisSystem', "FALSE")
-      window.localStorage.setItem('uses', "1")
-    }
-  </script>
-</head>
-
-<body class="w-screen overflow-x-hidden">
-  <!-- Header Start -->
-  <header class="text-gray-600 body-font">
-    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-      <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
-        <img src="/static/blog64.png" alt="Blog Logo" width="23%" height="auto" />
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
+  <body class="w-screen overflow-x-hidden">
+    <!-- Header Start -->
+    <header class="text-gray-600 body-font">
+      <div
+        class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
+      >
+        <a
+          class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+          href="/"
+        >
+          <img
+            src="/static/blog64.png"
+            alt="Blog Logo"
+            width="23%"
+            height="auto"
+          />
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
         </svg> -->
-        <span class="ml-3 text-4xl text-nowrap">SecureHack Blogs</span>
-      </a>
-      <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-        <!-- <a class="mr-5 hover:text-gray-900">First Link</a>
+          <span class="ml-3 text-4xl text-nowrap">SecureHack Blogs</span>
+        </a>
+        <nav
+          class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"
+        >
+          <!-- <a class="mr-5 hover:text-gray-900">First Link</a>
         <a class="mr-5 hover:text-gray-900">Second Link</a>
         <a class="mr-5 hover:text-gray-900">Third Link</a>
         <a class="mr-5 hover:text-gray-900">Fourth Link</a> -->
-        <!-- Use these links if needed -->
-      </nav>
-      <a class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0"
-        href="./login">Login<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-          stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-          <path d="M5 12h14M12 5l7 7-7 7"></path>
-        </svg>
-      </a>
-    </div>
-  </header>
+          <!-- Use these links if needed -->
+        </nav>
+        <a
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0"
+          href="./login"
+          >Login<svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 ml-1"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </header>
 
-  {%for i in blogs_data %} 
-  <!-- Order of i in blog_data ->
+    {%for i in blogs_data %}
+    <!-- Order of i in blog_data ->
   i[0] -> sno
   i[1] -> title
   i[2] -> short description
@@ -56,107 +89,160 @@
   i[6] -> img_link
   i[7] -> blog_url
   i[8] -> timestamp  -->
-          <div class="w-full sm:w-1/2 md:w-1/3 self-stretch p-2 mb-2">
-            <div class="rounded shadow-md h-full">
-              <a href="/blogs/{{i[7]}}"
-                ><img
-                  class="w-full m-0 rounded-t lazy"
-                  src="{{i[6]}}"
-                  width="960"
-                  height="500"
-                  alt="This post thumbnail"
-              /></a>
-              <div class="px-6 py-5">
-                <div class="font-semibold text-lg mb-2">
-                  <a
-                    class="text-slate-900 hover:text-slate-700"
-                    href="/blogs/{i[7]}"
-                    >{{i[1]}}</a
-                  >
-                </div>
-                <p class="text-slate-700 mb-1" title="Published date">
-                  {{i[8]}}
-                </p>
-                <p class="text-slate-800">
-                  {{i[2]}}
-                </p>
-              </div>
-            </div>
+    <div class="w-full sm:w-1/2 md:w-1/3 self-stretch p-2 mb-2">
+      <div class="rounded shadow-md h-full">
+        <a href="/blogs/{{i[7]}}"
+          ><img
+            class="w-full m-0 rounded-t lazy"
+            src="{{i[6]}}"
+            width="960"
+            height="500"
+            alt="This post thumbnail"
+        /></a>
+        <div class="px-6 py-5">
+          <div class="font-semibold text-lg mb-2">
+            <a class="text-slate-900 hover:text-slate-700" href="/blogs/{i[7]}"
+              >{{i[1]}}</a
+            >
           </div>
-          {%endfor%}  
-
-
-
-
-
-
-          
-  <!-- Header Ends -->
-  <br>
-  <div class="block border shadow-xl m-auto w-[70vw]">
-    <form action="./admin.html" method="post">
-      <h1 class="text-center text-2xl font-bold p-4 m-4">Create Blog</h1>
-      <p for="title" class="px-4 py-2">Blog Title:</p>
-      <input type="text" name="title" id="title" placeholder="Title" class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4">
-      <p for="data" class="px-4 py-2">Blog Data:</p>
-      <input type="text" name="data" id="data" placeholder="Blog Text..."
-        class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4">
-
-      <button type="submit"
-        class="bg-teal-500 p-2 rounded-xl text-white px-4 w-[40%] mx-[50%] -translate-x-1/2 my-8">Add this blog
-      </button>
-    </form>
-  </div>
-  <br><br><br>
-
-  <div class="block border shadow-xl m-auto w-[70vw]">
-    <form action="./admin.html" method="post">
-      <h1 class="text-center text-2xl font-bold p-4 m-4">Update Blog</h1>
-      <p for="id" class="px-4 py-2">Blog ID:</p>
-      <input type="text" name="id" id="id" placeholder="Blog ID" class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4">
-      <p for="title" class="px-4 py-2">Blog Title:</p>
-      <input type="text" name="title" id="title" placeholder="Title" class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4">
-      <p for="data" class="px-4 py-2">Blog Data:</p>
-      <input type="text" name="data" id="data" placeholder="Blog Text..."
-        class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4">
-
-      <button type="submit"
-        class="bg-teal-500 p-2 rounded-xl text-white px-4 w-[40%] mx-[50%] -translate-x-1/2 my-8">Update this blog
-      </button>
-    </form>
-  </div>
-
-  <br> <br><br>
-  <div class="block border shadow-xl m-auto w-[70vw]">
-    <form action="./admin.html" method="post">
-      <h1 class="text-center text-2xl font-bold p-4 m-4">Delete Blog</h1>
-      <p for="title" class="px-4 py-2">Blog Title:</p>
-      <input type="text" name="title" id="title" placeholder="Title" class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4">
-      <p for="id" class="px-4 py-2">Blog ID:</p>
-      <input type="text" name="id" id="id" placeholder="Blog ID" class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4">
-
-      <button type="submit"
-        class="bg-teal-500 p-2 rounded-xl text-white px-4 w-[40%] mx-[50%] -translate-x-1/2 my-8">Delete this blog</button>
-    </form>
-  </div>
-
-
-  <br><br><br>
-
-  <!-- Footer -->
-  <footer class="text-gray-600 body-font">
-    <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-      <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-        <img src="/static/blog64.png" alt="Blog Logo" width="23%" height="auto" />
-        <span class="ml-3 text-xl">SecureHack Blogs</span>
-      </a>
-      <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-        © 2024 SecureHack Blogs —
-        <a href="" class="text-gray-600 ml-1" rel="noopener noreferrer"
-          target="_blank">@securehack</a>
-      </p>
+          <p class="text-slate-700 mb-1" title="Published date">{{i[8]}}</p>
+          <p class="text-slate-800">{{i[2]}}</p>
+        </div>
+      </div>
     </div>
-  </footer>
-</body>
+    {%endfor%}
 
+    <!-- Header Ends -->
+    <br />
+    <div class="block border shadow-xl m-auto w-[70vw]">
+      <form action="./admin.html" method="post">
+        <h1 class="text-center text-2xl font-bold p-4 m-4">Create Blog</h1>
+        <p for="title" class="px-4 py-2">Blog Title:</p>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Title"
+          class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4"
+        />
+        <p for="data" class="px-4 py-2">Blog Data:</p>
+        <input
+          type="text"
+          name="data"
+          id="data"
+          placeholder="Blog Text..."
+          class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4"
+        />
+
+        <button
+          type="submit"
+          class="bg-teal-500 p-2 rounded-xl text-white px-4 w-[40%] mx-[50%] -translate-x-1/2 my-8"
+        >
+          Add this blog
+        </button>
+      </form>
+    </div>
+    <br /><br /><br />
+
+    <div class="block border shadow-xl m-auto w-[70vw]">
+      <form action="./admin.html" method="post">
+        <h1 class="text-center text-2xl font-bold p-4 m-4">Update Blog</h1>
+        <p for="id" class="px-4 py-2">Blog ID:</p>
+        <input
+          type="text"
+          name="id"
+          id="id"
+          placeholder="Blog ID"
+          class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4"
+        />
+        <p for="title" class="px-4 py-2">Blog Title:</p>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Title"
+          class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4"
+        />
+        <p for="data" class="px-4 py-2">Blog Data:</p>
+        <input
+          type="text"
+          name="data"
+          id="data"
+          placeholder="Blog Text..."
+          class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4"
+        />
+
+        <button
+          type="submit"
+          class="bg-teal-500 p-2 rounded-xl text-white px-4 w-[40%] mx-[50%] -translate-x-1/2 my-8"
+        >
+          Update this blog
+        </button>
+      </form>
+    </div>
+
+    <br />
+    <br /><br />
+    <div class="block border shadow-xl m-auto w-[70vw]">
+      <form action="./admin.html" method="post">
+        <h1 class="text-center text-2xl font-bold p-4 m-4">Delete Blog</h1>
+        <p for="title" class="px-4 py-2">Blog Title:</p>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Title"
+          class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4"
+        />
+        <p for="id" class="px-4 py-2">Blog ID:</p>
+        <input
+          type="text"
+          name="id"
+          id="id"
+          placeholder="Blog ID"
+          class="p-3 rounded-xl w-[90%] bg-gray-200 mx-4"
+        />
+
+        <button
+          type="submit"
+          class="bg-teal-500 p-2 rounded-xl text-white px-4 w-[40%] mx-[50%] -translate-x-1/2 my-8"
+        >
+          Delete this blog
+        </button>
+      </form>
+    </div>
+
+    <br /><br /><br />
+
+    <!-- Footer -->
+    <footer class="text-gray-600 body-font">
+      <div
+        class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
+      >
+        <a
+          class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+        >
+          <img
+            src="/static/blog64.png"
+            alt="Blog Logo"
+            width="23%"
+            height="auto"
+          />
+          <span class="ml-3 text-xl">SecureHack Blogs</span>
+        </a>
+        <p
+          class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
+        >
+          © 2024 SecureHack Blogs —
+          <a
+            href=""
+            class="text-gray-600 ml-1"
+            rel="noopener noreferrer"
+            target="_blank"
+            >@securehack</a
+          >
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
