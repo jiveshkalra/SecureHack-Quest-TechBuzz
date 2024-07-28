@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template,request
 import mysql.connector
+import uuid
   
 app = Flask(__name__) 
 mysql_config = { 
@@ -32,7 +33,25 @@ def api_login():
                 return {"message":"Invalid Username or Password","success":False}
             else:
                 return {"message":"Login Success","success":True}
+
+@app.route('/api/signup', methods=['GET'])
+def api_signup():
+    email = request.args.get('email')
+    name = request.args.get('name')
+    password = request.args.get('password') 
+    if name is None or email is None or password is None:
+        return {"message":"Name , Email and Password are required","success":False}
+    else:
+        user_uuid = str(uuid.uuid4())
+        with mysql.connector.connect(**mysql_config) as mydb:
+            mycursor = mydb.cursor()   
+            query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')" 
+            print(query)
+            mycursor.execute(query)
+            mydb.commit()
+            return {"message":"Signup Success","success":True} 
             
+
 @app.route("/login")
 def login():
     return render_template('login.html')
