@@ -43,20 +43,5 @@
 </div>
 <!-- Blog Div End -->
 
-<script>
-  var login_href = document.getElementById("login_href");
-  var logout = document.getElementById("logout");
-
-  var isloggedin = window.localStorage.getItem("isloggedin");
-  if (isloggedin == "true") {
-    login_href.href = "/create_blog";
-    login_href.innerHTML = "Create Blog";
-    logout.style.display = "flex";
-  } else {
-    login_href.href = "/login";
-    login_href.innerHTML = "Login";
-    logout.style.display = "none";
-  }
-</script>
 
 {% endblock %}
