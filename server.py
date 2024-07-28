@@ -36,7 +36,10 @@ def adminPage():
 
 @app.route("/adminPageDontComeHereImWarningYou")
 def adminPageDontComeHereImWarningYou():
-    return render_template("admin/index.html")  
+    mycursor = mydb.cursor()   
+    mycursor.execute("SELECT * FROM blogs") 
+    blogs_data = mycursor.fetchall() 
+    return render_template("admin/index.html", blogs_data=blogs_data)  
 
 @app.route("/blogs/<blog_url>")
 def blog(blog_url): 
