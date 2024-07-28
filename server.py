@@ -45,12 +45,17 @@ def api_signup():
     else:
         user_uuid = str(uuid.uuid4())
         with mysql.connector.connect(**mysql_config) as mydb:
-            mycursor = mydb.cursor()   
-            query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')"  
-            mycursor.execute(query)
-            mydb.commit()
-            
-            return {"message":"Signup Success","success":True} ,200
+            mycursor = mydb.cursor()
+            mycursor.execute(f"SELECT * FROM `users` WHERE email = '{email}'")
+            user_data = mycursor.fetchone()
+            if user_data is not None:
+                return {"message":"Email Already Exists","success":False} , 400
+            else: 
+                query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')"  
+                mycursor.execute(query)
+                mydb.commit()
+                
+                return {"message":"Signup Success","success":True} ,200
             
 
 @app.route("/login")

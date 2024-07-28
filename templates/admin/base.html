@@ -6,26 +6,16 @@
     <title>SecuerHack Blogs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      if (
-        new URLSearchParams(location.search).get("passcode") !=
-          "PriyanshuIsBoss" &&
-        window.localStorage.getItem("DidAdminLogInOnThisSystem") != "TRUE"
-      ) {
-        window.location = window.location.origin + "/admin/login";
+      if (window.location.href == window.location.origin + "/admin/login") {
       } else {
-        window.localStorage.setItem("DidAdminLogInOnThisSystem", "TRUE");
-      }
-      if (window.localStorage.getItem("DidAdminLogInOnThisSystem") == "TRUE") {
-        localStorage.setItem(
-          "uses",
-          parseInt(
-            localStorage.getItem("uses") ? localStorage.getItem("uses") : 0
-          ) + 1
-        );
-      }
-      if (parseInt(localStorage.getItem("uses")) >= 4) {
-        window.localStorage.setItem("DidAdminLogInOnThisSystem", "FALSE");
-        window.localStorage.setItem("uses", "1");
+        if (
+          new URLSearchParams(location.search).get("passcode") != "CongratulationsYouFoundSomething" &&
+          window.localStorage.getItem("DidAdminLogInOnThisSystem") != "TRUE"
+        ) {
+          window.location = window.location.origin + "/admin/login";
+        } else {
+          window.localStorage.setItem("DidAdminLogInOnThisSystem", "TRUE");
+        }
       }
     </script>
   </head>
@@ -61,7 +51,7 @@
           <!-- Use these links if needed -->
         </nav>
         <a
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0"
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2"
           id="login_href"
           href="./login"
           >Login<svg
@@ -76,12 +66,27 @@
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
+        <a
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2"
+          id="logout"
+          href="./logout"
+          >Logout<svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 ml-1"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
       </div>
     </header>
 
-    {% block content %}
-    {% endblock %}
-    
+    {% block content %} {% endblock %}
+
     <!-- Footer -->
     <footer class="text-gray-600 body-font">
       <div
@@ -112,5 +117,23 @@
         </p>
       </div>
     </footer>
+
+    <script>
+      var login_href = document.getElementById("login_href");
+      var logout = document.getElementById("logout");
+
+      var isloggedin = window.localStorage.getItem("isloggedin");
+      if (isloggedin == "true") {
+        login_href.innerHTML = "Dashboard";
+        login_href.href = "/admin/";
+        login_href.display = "none";
+        logout.style.display = "flex";
+      } else {
+        login_href.innerHTML = "Login";
+        login_href.href = "/admin/login";
+        login_href.display = "flex";
+        logout.style.display = "none";
+      }
+    </script>
   </body>
 </html>
