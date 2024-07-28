@@ -1,8 +1,2 @@
-1. Make a account system, so anyone can post their blogs  (frontend + backend) 
-2. ADMIN Panel IF TIME ALLOWS
-
-UI of login and register page left
-admin panels login page left 
-admin panel setup left 
-
-readme!!
+1. Admin Panel -> CRUD Operations 
+2. Create Blog page
