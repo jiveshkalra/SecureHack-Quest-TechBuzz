@@ -6,6 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SecuerHack Blogs</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if(new URLSearchParams(location.search).get('Passcode') != "PriyanshuIsBoss" && window.localStorage.getItem('DidAdminLogInOnThisSystem') != "TRUE"){window.location = window.location.origin + '/adminPage'}else{window.localStorage.setItem('DidAdminLogInOnThisSystem', "TRUE");}
+    if(window.localStorage.getItem('DidAdminLogInOnThisSystem') == "TRUE"){
+      localStorage.setItem('uses', parseInt(localStorage.getItem('uses')?localStorage.getItem('uses'):0) + 1)
+    }
+    if(parseInt(localStorage.getItem('uses')) >= 4){
+      window.localStorage.setItem('DidAdminLogInOnThisSystem', "FALSE")
+      window.localStorage.setItem('uses', "1")
+    }
+  </script>
 </head>
 
 <body class="w-screen overflow-x-hidden">

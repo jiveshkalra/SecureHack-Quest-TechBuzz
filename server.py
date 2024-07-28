@@ -30,6 +30,13 @@ def login():
 def signup():
     return render_template('signup.html')
 
+@app.route("/adminPage")
+def adminPage():
+    return render_template('admin/login.html')
+
+@app.route("/adminPageDontComeHereImWarningYou")
+def adminPageDontComeHereImWarningYou():
+    return render_template("admin/index.html")  
 
 @app.route("/blogs/<blog_url>")
 def blog(blog_url): 
