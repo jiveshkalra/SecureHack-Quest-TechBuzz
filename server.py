@@ -10,6 +10,7 @@ mysql_config = {
     "database":"sql12722127",
     "raise_on_warnings": True
 }
+
 @app.route("/")
 def index():   
     with mysql.connector.connect(**mysql_config) as mydb:
