@@ -39,17 +39,17 @@ def api_signup():
     email = request.args.get('email')
     name = request.args.get('name')
     password = request.args.get('password') 
-    if name is None or email is None or password is None:
-        return {"message":"Name , Email and Password are required","success":False}
+    if len(name) ==0 or len(email) == 0 or len(password) ==0:
+        return {"message":"Name , Email and Password are required","success":False} , 400
     else:
         user_uuid = str(uuid.uuid4())
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()   
-            query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')" 
-            print(query)
+            query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')"  
             mycursor.execute(query)
             mydb.commit()
-            return {"message":"Signup Success","success":True} 
+            
+            return {"message":"Signup Success","success":True} ,200
             
 
 @app.route("/login")
