@@ -170,10 +170,11 @@
             console.log(res);
             if (res.status == 200) {
               alert("Your account is created successfully!");
-              window.localStorage.setItem("email", email);
-              window.localStorage.setItem("name", name);
-              window.localStorage.setItem("password", password);
-              window.location.href = "/login";
+              window.localStorage.setItem("email", email); 
+              window.localStorage.setItem("password", password); 
+              window.localStorage.setItem('isloggedin', 'true');
+              window.location.href = "/";
+              
             } else {
               var json = res.json().then((json) => {
                 alert(json["message"]);

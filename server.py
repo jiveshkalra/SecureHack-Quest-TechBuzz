@@ -20,19 +20,19 @@ def index():
 
 @app.route('/api/login', methods=['GET'])
 def api_login(): 
-    username = request.args.get('username')
+    email = request.args.get('email')
     password = request.args.get('password')
-    if username is None or password is None:
-        return {"message":"Username and Password are required","success":False}
+    if email is None or password is None:
+        return {"message":"Email and Password are required","success":False} , 400
     else:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()
-            mycursor.execute(f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'")
+            mycursor.execute(f"SELECT * FROM users WHERE email = '{email}' AND password = '{password}'")
             user_data = mycursor.fetchone()
             if user_data is None:
-                return {"message":"Invalid Username or Password","success":False}
+                return {"message":"Invalid Email or Password","success":False} , 400
             else:
-                return {"message":"Login Success","success":True}
+                return {"message":"Login Success","success":True} , 200 
 
 @app.route('/api/signup', methods=['GET'])
 def api_signup():
