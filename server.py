@@ -17,7 +17,22 @@ def index():
         blogs_data = mycursor.fetchall() 
     return render_template('index.html', blogs_data=blogs_data)
 
-
+@app.route('/api/login', methods=['GET'])
+def api_login(): 
+    username = request.args.get('username')
+    password = request.args.get('password')
+    if username is None or password is None:
+        return {"message":"Username and Password are required","success":False}
+    else:
+        with mysql.connector.connect(**mysql_config) as mydb:
+            mycursor = mydb.cursor()
+            mycursor.execute(f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'")
+            user_data = mycursor.fetchone()
+            if user_data is None:
+                return {"message":"Invalid Username or Password","success":False}
+            else:
+                return {"message":"Login Success","success":True}
+            
 @app.route("/login")
 def login():
     return render_template('login.html')
