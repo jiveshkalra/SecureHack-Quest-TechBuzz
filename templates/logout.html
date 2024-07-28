@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Hack Logout</title>
+</head>
+<body>
+    <script>
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+        localStorage.removeItem('isloggedin');
+        localStorage.removeItem('DidAdminLogInOnThisSystem');
+        localStorage.removeItem('uses');
+        window.location.href = '/';
+    </script>
+</body>
+</html>

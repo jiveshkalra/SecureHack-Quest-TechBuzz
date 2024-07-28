@@ -56,6 +56,14 @@ def api_signup():
 def login():
     return render_template('login.html')
 
+@app.route("/create_blog")
+def create_blog():
+    return render_template('create_blog.html')
+
+@app.route("/logout")
+def logout():
+    return render_template('logout.html')
+
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
