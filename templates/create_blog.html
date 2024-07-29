@@ -63,46 +63,66 @@
             <h1
               class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
             >
-              Welcome Back!
+              Create Blog!
             </h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-              Please login to read hundreds of informative blogs for free!!
+              Just 1 step away from uploading your amazing blog!
             </p>
           </div>
           <div class="w-full sm:w-[50%] mx-auto">
             <div class="">
-              <label for="full-name" class="leading-7 text-sm text-gray-600"
-                >Email</label
+              <label for="title" class="leading-7 text-sm text-gray-600"
+                >Title</label
               >
               <input
-                type="email"
-                id="email"
-                name="email"
+                type="text"
+                id="title"
+                name="title"
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
             <div class="">
-              <label for="email" class="leading-7 text-sm text-gray-600"
-                >Password</label
+              <label for="img" class="leading-7 text-sm text-gray-600"
+                >Thumbnail Image</label
               >
               <input
-                type="password"
-                id="password"
-                name="password"
+                type="file"
+                accept="image/png, image/gif, image/jpeg"
+                id="img"
+                name="img"
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
+            </div>
+            <div class="">
+              <label for="short_desc" class="leading-7 text-sm text-gray-600"
+                >Short Description</label
+              >
+              <textarea
+                id="short_desc"
+                name="short_desc"
+                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              >
+              </textarea>
+            </div>
+            <div class="">
+              <label for="content" class="leading-7 text-sm text-gray-600"
+                >Blog Content</label
+              >
+              <textarea
+                id="content"
+                rows="6"
+                name="content"
+                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              >
+              </textarea>
             </div>
             <br />
             <button
               class="-translate-x-1/2 mx-[50%] w-[45%] text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
             >
-              Login
+              Create Blog
             </button>
-            <a
-              href="./signup"
-              class="-translate-x-1/2 mx-[38%] w-[45%] text-sm underline"
-              >Or Sign Up</a
-            >
+
           </div>
         </div>
       </form>
@@ -139,25 +159,20 @@
       </div>
     </footer>
     <script>
-      function login_user(event) {
-        event.preventDefault();
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+      function login_user(e){
+        e.preventDefault();
+        //TODO: Authorid vagera leke yahan se upload kara le
+        const title = document.getElementById("title").value;
+        const short_desc = document.getElementById("short_desc").value;
+        const content = document.getElementById("content").value;
+        // Image server ko kaise chahiye idk so see this
+        const img = document.getElementById("img").files[0];
+        //TODO: Mujhe upload url nhi pata so voh daal de yahan
         fetch("api/login?email=" + email + "&password=" + password)
           .then((response) => {
             return response.json();
           })
           .then((data) => {
-            if (data.success === true) {
-              alert("Login Successful");
-              window.location.href = "/";
-              window.localStorage.setItem("password", password);
-              window.localStorage.setItem("isloggedin", "true");
-              window.localStorage.setItem("email", email);
-            } else {
-              alert("Login Failed");
-              alert(data.message);
-            }
           });
       }
     </script>
