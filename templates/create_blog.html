@@ -1,63 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SecuerHack Blogs</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <!-- Header Start -->
-    <header class="text-gray-600 body-font">
-      <div
-        class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
-      >
-        <a
-          class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-          href="/"
-        >
-          <img
-            src="/static/blog64.png"
-            alt="Blog Logo"
-            width="23%"
-            height="auto"
-          />
-          <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-        </svg> -->
-          <span class="ml-3 text-4xl text-nowrap">SecureHack Blogs</span>
-        </a>
-        <nav
-          class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"
-        >
-          <!-- <a class="mr-5 hover:text-gray-900">First Link</a>
-        <a class="mr-5 hover:text-gray-900">Second Link</a>
-        <a class="mr-5 hover:text-gray-900">Third Link</a>
-        <a class="mr-5 hover:text-gray-900">Fourth Link</a> -->
-          <!-- Use these links if needed -->
-        </nav>
-        <a
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0" id='login_href'
-          href="./login"
-          >Login<svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-1"
-            viewBox="0 0 24 24"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
-    </header>
-    <!-- Header Ends -->
-
-    <!-- LOGIN STARTS -->
+{% extends "base.html" %} {% block content %}
+    <!-- CREATE BLOG STARTS -->
     <section class="text-gray-600 body-font">
-      <form onsubmit="return login_user(event);">
+      <form onsubmit="return create_blog(event);">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
             <h1
@@ -82,17 +26,16 @@
               />
             </div>
             <div class="">
-              <label for="img" class="leading-7 text-sm text-gray-600"
-                >Thumbnail Image</label
+              <label for="image_url" class="leading-7 text-sm text-gray-600"
+                >Imagine URL</label
               >
               <input
-                type="file"
-                accept="image/png, image/gif, image/jpeg"
-                id="img"
-                name="img"
+                type="text"
+                id="image_url"
+                name="image_url"
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
-            </div>
+            </div> 
             <div class="">
               <label for="short_desc" class="leading-7 text-sm text-gray-600"
                 >Short Description</label
@@ -106,17 +49,28 @@
             </div>
             <div class="">
               <label for="content" class="leading-7 text-sm text-gray-600"
-                >Blog Content</label
-              >
+                >Blog Content</label> <br>
+                <strong>Note: You can use <i><a href="https://www.w3schools.com/TAGS/default.asp"> html tags</a></i></strong>
               <textarea
                 id="content"
                 rows="6"
                 name="content"
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              >
-              </textarea>
+                placeholder="<h1>Hi!</h1>"
+              ></textarea>
+              <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
             </div>
             <br />
+            <div class="preview-box flex flex-col justify-center text-center align-center ">
+              <span class="text-4xl text-gray-600">Content Preview</span>
+              <br>
+              <div class="preview-content text-2xl text-black">
+  
+              </div>
+            </div>
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
             <button
               class="-translate-x-1/2 mx-[50%] w-[45%] text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
             >
@@ -127,47 +81,15 @@
         </div>
       </form>
     </section>
-
-    <!-- Footer -->
-    <footer class="text-gray-600 body-font">
-      <div
-        class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
-      >
-        <a
-          class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
-        >
-          <img
-            src="/static/blog64.png"
-            alt="Blog Logo"
-            width="23%"
-            height="auto"
-          />
-          <span class="ml-3 text-xl">SecureHack Blogs</span>
-        </a>
-        <p
-          class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
-        >
-          © 2024 SecureHack Blogs —
-          <a
-            href=""
-            class="text-gray-600 ml-1"
-            rel="noopener noreferrer"
-            target="_blank"
-            >@securehack</a
-          >
-        </p>
-      </div>
-    </footer>
+ 
     <script>
-      function login_user(e){
-        e.preventDefault();
-        //TODO: Authorid vagera leke yahan se upload kara le
+      function create_blog(e){
+        e.preventDefault(); 
         const title = document.getElementById("title").value;
         const short_desc = document.getElementById("short_desc").value;
-        const content = document.getElementById("content").value;
-        // Image server ko kaise chahiye idk so see this
-        const img = document.getElementById("img").files[0];
-        //TODO: Mujhe upload url nhi pata so voh daal de yahan
+        const content = document.getElementById("content").value; 
+        const image_url = document.getElementById("image_url").value;
+        
         fetch("api/login?email=" + email + "&password=" + password)
           .then((response) => {
             return response.json();
@@ -175,6 +97,11 @@
           .then((data) => {
           });
       }
+    </script> 
+    <script>
+      document.getElementById("content").addEventListener("input", function(){
+        document.querySelector(".preview-content").innerHTML = this.value;
+
+      });
     </script>
-  </body>
-</html>
+    {% endblock %}

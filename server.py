@@ -32,8 +32,8 @@ def api_login():
             user_data = mycursor.fetchone()
             if user_data is None:
                 return {"message":"Invalid Email or Password","success":False} , 400
-            else:
-                return {"message":"Login Success","success":True} , 200 
+            else: 
+                return {"message":"Login Success","success":True,"user_data":user_data} , 200 
 
 @app.route('/api/signup', methods=['GET'])
 def api_signup():
@@ -55,7 +55,7 @@ def api_signup():
                 mycursor.execute(query)
                 mydb.commit()
                 
-                return {"message":"Signup Success","success":True} ,200
+                return {"message":"Signup Success","success":True,"uuid":user_uuid} ,200 
             
 
 @app.route("/login")

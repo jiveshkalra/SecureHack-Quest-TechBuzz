@@ -108,7 +108,7 @@
       var login_href = document.getElementById("login_href");
       var logout = document.getElementById("logout");
 
-      var isloggedin = window.localStorage.getItem("isloggedin");
+      var isloggedin = window.localStorage.getItem("user_isloggedin");
       if (isloggedin == "true") {
         login_href.href = "/create_blog";
         login_href.innerHTML = "Create Blog";

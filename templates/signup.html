@@ -73,21 +73,16 @@
         var email = document.getElementById("email").value;
         var name = document.getElementById("name").value;
         var password = document.getElementById("password").value;
-        fetch(
-          "/api/signup?email=" +
-            email +
-            "&name=" +
-            name +
-            "&password=" +
-            password
-        )
+        fetch( "/api/signup?email=" + email + "&name=" +name + "&password=" +  password) 
+          .then((res) => {return res.json(); })
           .then((res) => {
-            console.log(res);
-            if (res.status == 200) {
+            if (res.success == true) {  
               alert("Your account is created successfully!");
-              window.localStorage.setItem("email", email); 
-              window.localStorage.setItem("password", password); 
-              window.localStorage.setItem('isloggedin', 'true');
+              window.localStorage.setItem("user_email", email); 
+              window.localStorage.setItem("user_password", password); 
+              window.localStorage.setItem("user_name", name); 
+              window.localStorage.setItem("user_uuid", res.uuid); 
+              window.localStorage.setItem('user_isloggedin', 'true');
               window.location.href = "/";
               
             } else {

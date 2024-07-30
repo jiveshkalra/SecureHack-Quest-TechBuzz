@@ -58,16 +58,20 @@
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         fetch("api/login?email=" + email + "&password=" + password)
-          .then((response) => {
-            return response.json();
-          })
+          .then((response) => {return response.json()})
           .then((data) => {
             if (data.success === true) {
               alert("Login Successful");
               window.location.href = "/";
-              window.localStorage.setItem("password", password);
-              window.localStorage.setItem("isloggedin", "true");
-              window.localStorage.setItem("email", email);
+              window.localStorage.setItem("user_password", password);
+              window.localStorage.setItem("user_isloggedin", "true");
+              window.localStorage.setItem("user_email", email);
+              user_uuid = data.user_data[2]
+              user_name = data.user_data[1]
+              window.localStorage.setItem("user_uuid", user_uuid);
+              window.localStorage.setItem("user_name", user_name);
+              
+              // window.localStorage.setItem("email",]);
             } else {
               alert("Login Failed");
               alert(data.message);
