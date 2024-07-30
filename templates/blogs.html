@@ -77,18 +77,19 @@ blog_data[8] # timestamp
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 ">
                         <div>
                             <a href="#" rel="author" class="text-2xl font-bold text-gray-900 ">By {{blog_data[5]}}</a> 
+                            <p class="text-lg text-gray-800 text-xl ">Views: <strong>{{blog_data[9]}}</strong></p>
                             <p class="text-lg text-gray-500 "><time pubdate datetime="{{blog_data[8]}}" title="{{blog_data[8]}}">{{blog_data[8]}}</time></p>
+
                         </div>
                     </div>
                 </address>
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl  ">{{blog_data[1]}}</h1>
             </header> 
             <div class="content-div text-2xl ">
-                {{ blog_data[3] | safe }}
-
+                {{ blog_data[3] | safe }} 
             </div>
         </article>
     </div>
-  </main>
+  </main> 
 </body>
 </html>

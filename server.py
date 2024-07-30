@@ -160,7 +160,11 @@ def blog(blog_url):
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor() 
             mycursor.execute(f"SELECT * FROM blogs WHERE blog_url = '{blog_url}'")
-            blog_data = mycursor.fetchone() 
+            blog_data = mycursor.fetchone()  
+            new_views = blog_data[9] +1
+            mycursor.execute(f"UPDATE `blogs` SET `views` = {new_views} WHERE blog_url = '{blog_url}'")
+            mydb.commit()
+            
         if blog_data is None:
             return redirect('/?error_code=blog_not_found')
         else:
