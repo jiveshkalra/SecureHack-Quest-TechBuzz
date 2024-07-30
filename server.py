@@ -76,7 +76,18 @@ def api_create_blog():
             mycursor.execute(query)
             mydb.commit()
             return {"message":"Blog Created Successfully","success":True} ,200
-         
+
+@app.route('/api/admin/delete_blog', methods=['GET'])
+def api_delete_blog():
+    try:
+        blog_id = request.args.get('blog_id')
+        with mysql.connector.connect(**mysql_config) as mydb:
+            mycursor = mydb.cursor()
+            mycursor.execute(f"DELETE FROM blogs WHERE `s.no` = {blog_id}")
+            mydb.commit()
+            return {"message":"Blog Deleted Successfully","success":True} ,200
+    except Exception as e:
+        return {"message":str(e),"success":False} ,400
 
 @app.route("/login")
 def login():
@@ -101,7 +112,12 @@ def admin_login():
 @app.route("/admin/")
 @app.route("/admin/index")
 def admin(): 
-    return render_template('admin/index.html')
+    with mysql.connector.connect(**mysql_config) as mydb:
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT * FROM blogs") 
+        blogs_data = mycursor.fetchall()
+    
+    return render_template('admin/index.html',blogs_data=blogs_data)
  
 
 @app.route("/blogs/<blog_url>")
