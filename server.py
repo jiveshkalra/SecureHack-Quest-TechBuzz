@@ -56,7 +56,27 @@ def api_signup():
                 mydb.commit()
                 
                 return {"message":"Signup Success","success":True,"uuid":user_uuid} ,200 
-            
+
+@app.route('/api/create_blog', methods=['POST'])
+def api_create_blog():  
+    data = request.json
+    title = data.get('title')
+    content = data.get('content')
+    blog_url = data.get('blog_url')
+    short_desc = data.get('short_desc')
+    image_url = data.get('image_url')
+    author_uuid = data.get('author_uuid')
+    author_name = data.get('author_name')   
+    if len(title) ==0 or len(content) == 0 or len(blog_url) ==0 or len(short_desc) ==0 or len(image_url) ==0 or len(author_uuid) ==0 or len(author_name) ==0:
+        return {"message":"All fields are required","success":False} , 400
+    else:
+        with mysql.connector.connect(**mysql_config) as mydb:
+            mycursor = mydb.cursor()
+            query = f"INSERT INTO `blogs` (`title`,`content`,`blog_url`, `short_desc`, `img_link`, `author_uuid`, `author_name`) VALUES ('{title}','{content}','{blog_url}', '{short_desc}', '{image_url}', '{author_uuid}', '{author_name}')"    
+            mycursor.execute(query)
+            mydb.commit()
+            return {"message":"Blog Created Successfully","success":True} ,200
+         
 
 @app.route("/login")
 def login():
