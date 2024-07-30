@@ -89,6 +89,40 @@ def api_delete_blog():
     except Exception as e:
         return {"message":str(e),"success":False} ,400
 
+@app.route('/api/admin/fetch_blog_data_per_sno', methods=['GET'])
+def api_fetch_blog_data_per_sno():
+    try:
+        sno = request.args.get('sno')
+        with mysql.connector.connect(**mysql_config) as mydb:
+            mycursor = mydb.cursor()
+            mycursor.execute(f"SELECT * FROM blogs WHERE `s.no` = {sno}")
+            blog_data = mycursor.fetchone()
+            return {"message":"Blog Data Fetched Successfully","success":True,"blog_data":blog_data} ,200
+    except Exception as e:
+        return {"message":str(e),"success":False} ,400
+
+@app.route('/api/admin/update_blog', methods=['POST'])
+def api_update_blog():
+    sno = request.json.get('sno')
+    title = request.json.get('title')
+    content = request.json.get('content')
+    blog_url = request.json.get('blog_url')
+    short_desc = request.json.get('short_desc')
+    image_url = request.json.get('image_url') 
+    author_name = request.json.get('author_name')
+    print(sno,title,content,blog_url,short_desc,image_url,author_name)
+    try:
+        with mysql.connector.connect(**mysql_config) as mydb:
+            mycursor = mydb.cursor() 
+            query = f"UPDATE `blogs` SET `title` = '{title}', `content` = '{content}', `blog_url` = '{blog_url}', `short_desc` = '{short_desc}', `img_link` = '{image_url}', `author_name` = '{author_name}' WHERE `s.no` = {sno}"
+            mycursor.execute(query)
+            mydb.commit()
+            return {"message":"Blog Updated Successfully","success":True} ,200
+    except Exception as e:
+        return {"message":str(e),"success":False} ,400
+     
+     
+
 @app.route("/login")
 def login():
     return render_template('login.html')
