@@ -1,2 +1,0 @@
-1. Admin Panel -> CRUD Operations 
-2. Create Blog page
