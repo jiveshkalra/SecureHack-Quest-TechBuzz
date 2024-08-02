@@ -79,7 +79,7 @@ def api_login():
     else:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor() 
-            mycursor.execute(f"SELECT * FROM users WHERE email = '{email}' AND password = '{password}'")
+            mycursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", (email, password))
             user_data = mycursor.fetchone()
             if user_data is None:
                 return jsonify({"message":"Invalid Email or Password","success":False}) , 400
