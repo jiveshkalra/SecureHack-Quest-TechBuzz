@@ -4,9 +4,7 @@
       <form onsubmit="return login_user(event);">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
-            <h1
-              class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-            >
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
               Welcome Back!
             </h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
@@ -15,24 +13,22 @@
           </div>
           <div class="w-full sm:w-[50%] mx-auto">
             <div class="">
-              <label for="full-name" class="leading-7 text-sm text-gray-600"
-                >Email</label
-              >
+              <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
+                required
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
             <div class="">
-              <label for="email" class="leading-7 text-sm text-gray-600"
-                >Password</label
-              >
+              <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
+                required
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
@@ -45,39 +41,45 @@
             <a
               href="./signup"
               class="-translate-x-1/2 mx-[38%] w-[45%] text-sm underline"
-              >Or Sign Up</a
-            >
+            >Or Sign Up</a>
           </div>
         </div>
       </form>
     </section>
- 
+
     <script>
       function login_user(event) {
         event.preventDefault();
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        fetch("api/login?email=" + email + "&password=" + password)
-          .then((response) => {return response.json()})
-          .then((data) => {
-            if (data.success === true) {
-              alert("Login Successful");
-              window.location.href = "/";
-              window.localStorage.setItem("user_password", password);
-              window.localStorage.setItem("user_isloggedin", "true");
-              window.localStorage.setItem("user_email", email);
-              user_uuid = data.user_data[2]
-              user_name = data.user_data[1]
-              window.localStorage.setItem("user_uuid", user_uuid);
-              window.localStorage.setItem("user_name", user_name);
-              
-              // window.localStorage.setItem("email",]);
-            } else {
-              alert("Login Failed");
-              alert(data.message);
-            }
-          });
+
+        fetch("api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ 
+            email: email,
+            password: password
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert("Login Successful");
+            window.location.href = "/";
+            window.localStorage.setItem("user_isloggedin", "true");
+            window.localStorage.setItem("user_email", email);
+            window.localStorage.setItem("user_uuid", data.user_data[2]);
+            window.localStorage.setItem("user_name", data.user_data[1]);
+          } else {
+            alert("Login Failed");
+            alert(data.message);
+          }
+        })
+        .catch(error => {
+          alert("An error occurred. Please try again.");
+        });
       }
     </script>
-
 {% endblock %}
