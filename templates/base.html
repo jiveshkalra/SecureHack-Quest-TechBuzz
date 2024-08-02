@@ -3,121 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SecuerHack Blogs</title>
+    <title>SecureHack Blogs</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <!-- Header Start -->
     <header class="text-gray-600 body-font">
-      <div
-        class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
-      >
-        <a
-          class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-          href="/"
-        >
-          <img
-            src="/static/blog64.png"
-            alt="Blog Logo"
-            width="23%"
-            height="auto"
-          />
-          <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-        </svg> -->
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="{% url 'home' %}">
+          <img src="{% static 'blog64.png' %}" alt="Blog Logo" width="23%" height="auto" />
           <span class="ml-3 text-4xl text-nowrap">SecureHack Blogs</span>
         </a>
-        <nav
-          class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"
-        >
-          <!-- <a class="mr-5 hover:text-gray-900">First Link</a>
-        <a class="mr-5 hover:text-gray-900">Second Link</a>
-        <a class="mr-5 hover:text-gray-900">Third Link</a>
-        <a class="mr-5 hover:text-gray-900">Fourth Link</a> -->
-          <!-- Use these links if needed -->
+        <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+          <!-- Navigation Links -->
         </nav>
-        <a
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2"
-          id="login_href"
-          href="./login"
-          >Login<svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-1"
-            viewBox="0 0 24 24"
-          >
+        <a class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2" id="login_href" href="{% url 'login' %}">
+          Login
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
-        <a
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2"
-          id="logout"
-          href="./logout"
-          >Logout<svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-1"
-            viewBox="0 0 24 24"
-          >
+        <a class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2" id="logout" href="{% url 'logout' %}" style="display: none;">
+          Logout
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
       </div>
     </header>
     <!-- Header Ends -->
+
     {% block content %} {% endblock %}
 
     <!-- Footer -->
     <footer class="text-gray-600 body-font">
-      <div
-        class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
-      >
-        <a
-          class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
-        >
-          <img
-            src="/static/blog64.png"
-            alt="Blog Logo"
-            width="23%"
-            height="auto"
-          />
+      <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+        <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+          <img src="{% static 'blog64.png' %}" alt="Blog Logo" width="23%" height="auto" />
           <span class="ml-3 text-xl">SecureHack Blogs</span>
         </a>
-        <p
-          class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
-        >
+        <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
           © 2024 SecureHack Blogs —
-          <a
-            href=""
-            class="text-gray-600 ml-1"
-            rel="noopener noreferrer"
-            target="_blank"
-            >@securehack</a
-          >
+          <a href="" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@securehack</a>
         </p>
       </div>
     </footer>
 
     <script>
-      var login_href = document.getElementById("login_href");
-      var logout = document.getElementById("logout");
+      document.addEventListener('DOMContentLoaded', function() {
+        var login_href = document.getElementById("login_href");
+        var logout = document.getElementById("logout");
 
-      var isloggedin = window.localStorage.getItem("user_isloggedin");
-      if (isloggedin == "true") {
-        login_href.href = "/create_blog";
-        login_href.innerHTML = "Create Blog";
-        logout.style.display = "flex";
-      } else {
-        login_href.href = "/login";
-        login_href.innerHTML = "Login";
-        logout.style.display = "none";
-      }
+        var isloggedin = window.localStorage.getItem("user_isloggedin");
+        if (isloggedin === "true") {
+          login_href.href = "{% url 'create_blog' %}";
+          login_href.innerHTML = "Create Blog";
+          logout.style.display = "flex";
+        } else {
+          login_href.href = "{% url 'login' %}";
+          login_href.innerHTML = "Login";
+          logout.style.display = "none";
+        }
+      });
     </script>
   </body>
 </html>
