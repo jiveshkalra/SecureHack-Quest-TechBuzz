@@ -47,11 +47,12 @@ def blog(blog_url):
     try:  
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor() 
-            mycursor.execute(f"SELECT * FROM blogs WHERE blog_url = '{blog_url}'")
+            # Parameterized query for SELECT
+            mycursor.execute("SELECT * FROM blogs WHERE blog_url = %s", (blog_url,))
             blog_data = mycursor.fetchone()  
             print(blog_data[9])
             new_views = blog_data[9] +1
-            mycursor.execute(f"UPDATE `blogs` SET `views` = {new_views} WHERE blog_url = '{blog_url}'")
+            mycursor.execute("UPDATE blogs SET views = %s WHERE blog_url = %s", (new_views, blog_url)) # Parameterized New Views Query
             mydb.commit()
             
         if blog_data is None:
@@ -79,7 +80,8 @@ def api_login():
     else:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor() 
-            mycursor.execute(f"SELECT * FROM users WHERE email = '{email}' AND password = '{password}'")
+            # Parameterized query for SELECT
+            mycursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", (email, password))
             user_data = mycursor.fetchone()
             if user_data is None:
                 return jsonify({"message":"Invalid Email or Password","success":False}) , 400
@@ -97,13 +99,15 @@ def api_signup():
         user_uuid = str(uuid.uuid4())
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()
-            mycursor.execute(f"SELECT * FROM `users` WHERE email = '{email}'")
+            # Parameterized query for SELECT
+            mycursor.execute("SELECT * FROM users WHERE email = %s", (email,))
             user_data = mycursor.fetchone()
             if user_data is not None:
                 return jsonify({"message":"Email Already Exists","success":False}) , 400
             else: 
-                query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')"  
-                mycursor.execute(query)
+                # Parameterized query for INSERT
+                query = "INSERT INTO users (username, uuid, email, password) VALUES (%s, %s, %s, %s)"
+                mycursor.execute(query, (name, user_uuid, email, password))
                 mydb.commit()
                 
                 return jsonify({"message":"Signup Success","success":True,"uuid":user_uuid}) ,200 
@@ -124,8 +128,9 @@ def api_create_blog():
     else:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()
-            query = f"INSERT INTO `blogs` (`title`,`content`,`blog_url`, `short_desc`, `img_link`, `author_uuid`, `author_name`) VALUES ('{title}','{content}','{blog_url}', '{short_desc}', '{image_url}', '{author_uuid}', '{author_name}')"    
-            mycursor.execute(query)
+            # Parameterized query for INSERT
+            query = "INSERT INTO blogs (title, content, blog_url, short_desc, img_link, author_uuid, author_name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            mycursor.execute(query, (title, content, blog_url, short_desc, image_url, author_uuid, author_name))
             mydb.commit()
             return jsonify({"message":"Blog Created Successfully","success":True}) ,200
 
@@ -135,7 +140,8 @@ def api_delete_blog():
         blog_id = request.args.get('blog_id')
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()
-            mycursor.execute(f"DELETE FROM blogs WHERE `s.no` = {blog_id}")
+            # Parameterized query for DELETE
+            mycursor.execute("DELETE FROM blogs WHERE `s.no` = %s", (blog_id,))
             mydb.commit()
             return jsonify({"message":"Blog Deleted Successfully","success":True}) ,200
     except Exception as e:
@@ -147,7 +153,7 @@ def api_fetch_blog_data_per_sno():
         sno = request.args.get('sno')
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()
-            mycursor.execute(f"SELECT * FROM blogs WHERE `s.no` = {sno}")
+            mycursor.execute("SELECT * FROM blogs WHERE `s.no` = %s", (sno,))
             blog_data = mycursor.fetchone()
             return jsonify({"message":"Blog Data Fetched Successfully","success":True,"blog_data":blog_data} ),200
     except Exception as e:
@@ -166,8 +172,9 @@ def api_update_blog():
     try:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor() 
-            query = f"UPDATE `blogs` SET `title` = '{title}', `content` = '{content}', `blog_url` = '{blog_url}', `short_desc` = '{short_desc}', `img_link` = '{image_url}', `author_name` = '{author_name}' WHERE `s.no` = {sno}"
-            mycursor.execute(query)
+            # Parameterized query for UPDATE
+            query = "UPDATE blogs SET title = %s, content = %s, blog_url = %s, short_desc = %s, img_link = %s, author_name = %s WHERE `s.no` = %s"
+            mycursor.execute(query, (title, content, blog_url, short_desc, image_url, author_name, sno))
             mydb.commit()
             return jsonify({"message":"Blog Updated Successfully","success":True}) ,200
     except Exception as e:
