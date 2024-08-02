@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SecuerHack Blogs</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .logged-in {
+        display:flex;
+      }
+      .logged-out{
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <!-- Header Start -->
@@ -109,14 +117,16 @@
       var logout = document.getElementById("logout");
 
       var isloggedin = window.localStorage.getItem("user_isloggedin");
-      if (isloggedin == "true") {
+      if (isloggedin === "true") {
         login_href.href = "/create_blog";
-        login_href.innerHTML = "Create Blog";
-        logout.style.display = "flex";
+        login_href.textContent = "Create Blog";
+        logout.classList.add("logged-in");
+        logout.classList.remove("logged-out");
       } else {
         login_href.href = "/login";
-        login_href.innerHTML = "Login";
-        logout.style.display = "none";
+        login_href.textContent = "Login";
+        logout.classList.add("logged-out");
+        logout.classList.remove("logged-in");
       }
     </script>
   </body>

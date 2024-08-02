@@ -1,12 +1,22 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+{% block content %}
     <script>
-        localStorage.removeItem('user_email');
-        localStorage.removeItem('user_password');
-        localStorage.removeItem('user_isloggedin');
-        localStorage.removeItem('user_uuid');
-        localStorage.removeItem('user_name');
-        localStorage.removeItem('DidAdminLogInOnThisSystem'); 
-        window.location.href = '/';
-    </script>
+        // Remove user-related items from localStorage
+        // This is to ensure that all session-related information is cleared upon logout.
+        localStorage.removeItem('user_email'); // Clear stored user email
+        localStorage.removeItem('user_password'); // Clear stored user password (ensure this was stored, otherwise it's redundant)
+        localStorage.removeItem('user_isloggedin'); // Clear login status
+        localStorage.removeItem('user_uuid'); // Clear user UUID
+        localStorage.removeItem('user_name'); // Clear user name
+        localStorage.removeItem('DidAdminLogInOnThisSystem'); // Clear any admin login flag
+        
+        // Provide feedback to the user indicating that they are being logged out.
+        alert("You have been logged out successfully. Redirecting to the homepage.");
 
+        // Delay redirection to ensure the user sees the logout feedback.
+        // The delay of 1000 milliseconds (1 second) allows time for the alert to be noticed.
+        setTimeout(() => {
+            window.location.href = '/'; // Redirect to the homepage
+        }, 1000); // Delay in milliseconds
+    </script>
 {% endblock %}
