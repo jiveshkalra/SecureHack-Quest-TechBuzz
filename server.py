@@ -70,10 +70,11 @@ def index():
         blogs_data = mycursor.fetchall() 
     return render_template('index.html', blogs_data=blogs_data)
 
-@app.route('/api/login', methods=['GET'])
+@app.route('/api/login', methods=['POST'])
 def api_login(): 
-    email = request.args.get('email')
-    password = request.args.get('password')
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
     if email is None or password is None:
         return {"message":"Email and Password are required","success":False} , 400
     else:
@@ -86,10 +87,11 @@ def api_login():
             else: 
                 return jsonify({"message":"Login Success","success":True,"user_data":user_data}) , 200 
 
-@app.route('/api/signup', methods=['GET'])
+@app.route('/api/signup', methods=['POST'])
 def api_signup():
-    email = request.args.get('email')
-    name = request.args.get('name')
+    data = request.json
+    email = data.get('email')
+    name = data.get('name')
     password = request.args.get('password') 
     if len(name) ==0 or len(email) == 0 or len(password) ==0:
         return {"message":"Name , Email and Password are required","success":False} , 400

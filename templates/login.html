@@ -57,7 +57,13 @@
         event.preventDefault();
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        fetch("api/login?email=" + email + "&password=" + password)
+        fetch("/api/login", {
+          method: "POST",  // Changed method to POST
+          headers: {
+            "Content-Type": "application/json"  // Added header for JSON content
+          },
+          body: JSON.stringify({ email, password })  // Updated to send JSON data
+        })
           .then((response) => {return response.json()})
           .then((data) => {
             if (data.success === true) {
