@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template,request ,jsonify
 import mysql.connector
 import uuid
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__) 
 mysql_config = { 
@@ -74,6 +75,7 @@ def index():
 def api_login(): 
     email = request.args.get('email')
     password = request.args.get('password')
+    hashed_password = generate_password_hash(password)
     if email is None or password is None:
         return {"message":"Email and Password are required","success":False} , 400
     else:
@@ -81,7 +83,7 @@ def api_login():
             mycursor = mydb.cursor() 
             mycursor.execute(f"SELECT * FROM users WHERE email = '{email}' AND password = '{password}'")
             user_data = mycursor.fetchone()
-            if user_data is None:
+            if user_data is None or not check_password_hash(user_data[3], hashed_password):
                 return jsonify({"message":"Invalid Email or Password","success":False}) , 400
             else: 
                 return jsonify({"message":"Login Success","success":True,"user_data":user_data}) , 200 
@@ -95,6 +97,7 @@ def api_signup():
         return {"message":"Name , Email and Password are required","success":False} , 400
     else:
         user_uuid = str(uuid.uuid4())
+        hashed_password = generate_password_hash(password)
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()
             mycursor.execute(f"SELECT * FROM `users` WHERE email = '{email}'")
@@ -102,7 +105,7 @@ def api_signup():
             if user_data is not None:
                 return jsonify({"message":"Email Already Exists","success":False}) , 400
             else: 
-                query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')"  
+                query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{hashed_password}')"  
                 mycursor.execute(query)
                 mydb.commit()
                 
