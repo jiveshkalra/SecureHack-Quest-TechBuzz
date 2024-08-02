@@ -1,134 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SecuerHack Blogs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureHack Blogs</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      if (window.location.href == window.location.origin + "/admin/login") {
-      } else {
-        if (
-          new URLSearchParams(location.search).get("passcode") != "CongratulationsYouFoundSomething" &&
-          window.localStorage.getItem("DidAdminLogInOnThisSystem") != "TRUE"
-        ) {
-          window.location = window.location.origin + "/admin/login";
-        } else {
-          window.localStorage.setItem("DidAdminLogInOnThisSystem", "TRUE");
-        }
-      }
-    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
- 
   </head>
-
   <body class="w-screen overflow-x-hidden">
     <!-- Header Start -->
     <header class="text-gray-600 body-font">
-      <div
-        class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
-      >
-        <a
-          class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-          href="/"
-        >
-          <img
-            src="/static/blog64.png"
-            alt="Blog Logo"
-            width="23%"
-            height="auto"
-          /> 
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+          <img src="/static/blog64.png" alt="Blog Logo" width="23%" height="auto">
           <span class="ml-3 text-4xl text-nowrap">SecureHack Blogs</span>
         </a>
-        <nav
-          class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"
-        > 
-        </nav>
-        <a
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2"
-          id="login_href"
-          href="./login"
-          >Login<svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-1"
-            viewBox="0 0 24 24"
-          >
+        <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"></nav>
+        <a class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2" id="login_href" href="./login">Login
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
-        <a
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2"
-          id="logout"
-          href="./logout"
-          >Logout<svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-1"
-            viewBox="0 0 24 24"
-          >
+        <a class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0 mx-2" id="logout" href="./logout">Logout
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
       </div>
     </header>
 
-    {% block content %} {% endblock %}
+    {% block content %}{% endblock %}
 
     <!-- Footer -->
     <footer class="text-gray-600 body-font">
-      <div
-        class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
-      >
-        <a
-          class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
-        >
-          <img
-            src="/static/blog64.png"
-            alt="Blog Logo"
-            width="23%"
-            height="auto"
-          />
+      <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+        <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+          <img src="/static/blog64.png" alt="Blog Logo" width="23%" height="auto">
           <span class="ml-3 text-xl">SecureHack Blogs</span>
         </a>
-        <p
-          class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
-        >
+        <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
           © 2024 SecureHack Blogs —
-          <a
-            href=""
-            class="text-gray-600 ml-1"
-            rel="noopener noreferrer"
-            target="_blank"
-            >@securehack</a
-          >
+          <a href="" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@securehack</a>
         </p>
       </div>
     </footer>
 
     <script>
-      var login_href = document.getElementById("login_href");
-      var logout = document.getElementById("logout");
-
-      var isloggedin = window.localStorage.getItem("isloggedin");
-      if (isloggedin == "true") {
-        login_href.innerHTML = "Dashboard";
-        login_href.href = "/admin/";
-        login_href.display = "none";
-        logout.style.display = "flex";
-      } else {
-        login_href.innerHTML = "Login";
-        login_href.href = "/admin/login";
-        login_href.display = "flex";
-        logout.style.display = "none";
-      }
-    </script> 
+      document.addEventListener("DOMContentLoaded", function() {
+        var loginHref = document.getElementById("login_href");
+        var logout = document.getElementById("logout");
+        
+        // Fetch login status from the server instead of using localStorage
+        fetch('/api/auth/status')
+          .then(response => response.json())
+          .then(data => {
+            if (data.isLoggedIn) {
+              loginHref.innerHTML = "Dashboard";
+              loginHref.href = "/admin/";
+              loginHref.style.display = "none";
+              logout.style.display = "flex";
+            } else {
+              loginHref.innerHTML = "Login";
+              loginHref.href = "/admin/login";
+              loginHref.style.display = "flex";
+              logout.style.display = "none";
+            }
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    </script>
   </body>
 </html>

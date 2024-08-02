@@ -3,58 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Updated for Cross-Site Scripting in blogs.html-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'https://trusted.cdn.com'; style-src 'self' 'https://trusted.cdn.com';">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title> {{blog_data[1]}}</title>
+    <title>{{ blog_data[1] | escape }}</title>
 </head>
 <body>
     
     <!-- Header Start -->
     <header class="text-gray-600 body-font">
-        <div
-          class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
-        >
-          <a
-            class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-            href="/"
-          >
-            <img
-              src="/static/blog64.png"
-              alt="Blog Logo"
-              width="23%"
-              height="auto"
-            />
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg> -->
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+            <img src="/static/blog64.png" alt="Blog Logo" width="23%" height="auto" />
             <span class="ml-3 text-4xl text-nowrap">SecureHack Blogs</span>
           </a>
-          <nav
-            class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"
-          >
-            <!-- <a class="mr-5 hover:text-gray-900">First Link</a>
-          <a class="mr-5 hover:text-gray-900">Second Link</a>
-          <a class="mr-5 hover:text-gray-900">Third Link</a>
-          <a class="mr-5 hover:text-gray-900">Fourth Link</a> -->
-            <!-- Use these links if needed -->
+          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
           </nav>
-          <a
-            class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0" id='login_href'
-            href="./login"
-            >Login<svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 ml-1"
-              viewBox="0 0 24 24"
-            >
+          <a class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0" id='login_href' href="./login">
+            Login
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
           </a>
         </div>
-      </header>
-      <!-- Header Ends -->
+    </header>
+    <!-- Header Ends -->
+
 <!--
 Keys -> 
 blog_data[0] # Sno
@@ -66,30 +40,29 @@ blog_data[5] # Author Name
 blog_data[6] # img_link
 blog_data[7] # blog_url
 blog_data[8] # timestamp
- -->
+-->
  
-<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white   antialiased">
-    <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
-        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue  ">
+<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue">
             <header class="mb-4 lg:mb-6 not-format">
-                <img class="mr-4 " src="{{blog_data[6]}}" alt="{{blog_data[1]}}">
+                <img class="mr-4" src="{{ blog_data[6] | escape }}" alt="{{ blog_data[1] | escape }}">
                 <address class="flex items-center mb-6 not-italic">
-                    <div class="inline-flex items-center mr-3 text-sm text-gray-900 ">
+                    <div class="inline-flex items-center mr-3 text-sm text-gray-900">
                         <div>
-                            <a href="#" rel="author" class="text-2xl font-bold text-gray-900 ">By {{blog_data[5]}}</a> 
-                            <p class="text-lg text-gray-800 text-xl ">Views: <strong>{{blog_data[9]}}</strong></p>
-                            <p class="text-lg text-gray-500 "><time pubdate datetime="{{blog_data[8]}}" title="{{blog_data[8]}}">{{blog_data[8]}}</time></p>
-
+                            <a href="#" rel="author" class="text-2xl font-bold text-gray-900">By {{ blog_data[5] | escape }}</a> 
+                            <p class="text-lg text-gray-800 text-xl">Views: <strong>{{ blog_data[9] | escape }}</strong></p>
+                            <p class="text-lg text-gray-500"><time pubdate datetime="{{ blog_data[8] | escape }}" title="{{ blog_data[8] | escape }}">{{ blog_data[8] | escape }}</time></p>
                         </div>
                     </div>
                 </address>
-                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl  ">{{blog_data[1]}}</h1>
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl">{{ blog_data[1] | escape }}</h1>
             </header> 
-            <div class="content-div text-2xl ">
-                {{ blog_data[3] | safe }} 
-            </div>
+            <div class="content-div text-2xl">
+                {{ blog_data[3] | escape }}
+            </div>          
         </article>
     </div>
-  </main> 
+</main> 
 </body>
 </html>
