@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, jsonify
+from flask import Flask, redirect, render_template, request, jsonify, session
 import mysql.connector
 import uuid
 import os
@@ -16,6 +16,7 @@ mysql_config = {
     "user": os.getenv("DB_USER"),
     "password": os.getenv("DB_PASSWORD"),
     "database": os.getenv("DB_NAME"),
+    "app.secret_key": os.getenv("SECRET_KEY"),
     "raise_on_warnings": True
 }
 
@@ -31,7 +32,8 @@ def create_blog():
 
 @app.route("/logout")
 def logout():
-    return render_template('logout.html')
+    session.clear()
+    return redirect("/")
 
 @app.route("/signup")
 def signup():
