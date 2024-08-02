@@ -2,12 +2,15 @@ from flask import Flask, redirect, render_template,request ,jsonify
 import mysql.connector
 import uuid
 
+load_dotenv()
+
 app = Flask(__name__) 
+
 mysql_config = { 
-    "host":"localhost",
-    "user":" root",
-    "password":"",
-    "database":"secure_hack_quest",
+    "host": os.getenv("DB_HOST"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "database": os.getenv("DB_NAME"),
     "raise_on_warnings": True
 }
 
