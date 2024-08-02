@@ -1,140 +1,113 @@
-{% extends "base.html" %} {% block content %}
-<!-- CREATE BLOG STARTS -->
-<section class="text-gray-600 body-font">
-  <form onsubmit="return create_blog(event);">
-    <div class="container px-5 py-24 mx-auto">
-      <div class="flex flex-col text-center w-full mb-12">
-        <h1
-          class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-        >
-          Create Blog!
-        </h1>
-        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-          Just 1 step away from uploading your amazing blog!
-        </p>
-      </div>
-      <div class="w-full sm:w-[50%] mx-auto">
-        <div class="">
-          <label for="title" class="leading-7 text-sm text-gray-600"
-            >Title</label
-          >
-          <input
-            type="text"
-            id="title"
-            name="title"
-            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          />
-        </div>
-        <div class="">
-          <label for="short_desc" class="leading-7 text-sm text-gray-600"
-            >Short Description</label
-          >
-          <textarea
-            id="short_desc"
-            name="short_desc"
-            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          ></textarea>
-        </div>
-        <div class="">
-          <label for="image_url" class="leading-7 text-sm text-gray-600"
-            >Image URL</label
-          >
-          <input
-            type="text"
-            id="image_url"
-            name="image_url"
-            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          />
-        </div>
-        <div class="">
-          <label for="content" class="leading-7 text-sm text-gray-600"
-            >Blog Content</label
-          >
-          <br />
-          <strong
-            >Note: You can use
-            <i
-              ><a href="https://www.w3schools.com/TAGS/default.asp">
-                html tags</a
-              ></i
-            >
-            and
-            <a href="https://tailwindcss.com/docs/installation">
-              <i> tailwindcss classes</i></a
-            ></strong
-          >
-          <textarea
-            id="content"
-            rows="6"
-            name="content"
-            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            placeholder="<h1>Hi!</h1>"
-          ></textarea>
-          <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-        </div>
-        <br />
-        <div
-          class="preview-box flex flex-col justify-center text-center align-center"
-        >
-          <span class="text-4xl text-gray-600">Content Preview</span>
-          <br />
-          <div class="preview-content text-2xl text-black"></div>
-        </div>
-        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-
-        <button
-          id = "create_blog_btn"
-          class="-translate-x-1/2 mx-[50%] w-[45%] text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-        >
-          Create Blog
-        </button>
-      </div>
-    </div>
-  </form>
-</section>
-
-<script>
-  function create_blog(e) {
-    e.preventDefault();
-    const title = document.getElementById("title").value;
-    const short_desc = document.getElementById("short_desc").value;
-    const content = document.getElementById("content").value;
-    const image_url = document.getElementById("image_url").value;
-    const create_blog_btn = document.getElementById("create_blog_btn");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags for Character Set and Viewport Settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    create_blog_btn.disabled = true;
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Dynamic Title based on blog data -->
+    <title>{{ blog_data[1] }}</title>
+</head>
+<body>
+    <!-- Header Start -->
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <!-- Logo and Blog Title -->
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+                <img src="/static/blog64.png" alt="SecureHack Blogs Logo" width="23%" height="auto"/>
+                <span class="ml-3 text-4xl text-nowrap">SecureHack Blogs</span>
+            </a>
+            <!-- Navigation Links (Commented out; uncomment if needed) -->
+            <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                <!-- <a class="mr-5 hover:text-gray-900">First Link</a>
+                <a class="mr-5 hover:text-gray-900">Second Link</a>
+                <a class="mr-5 hover:text-gray-900">Third Link</a>
+                <a class="mr-5 hover:text-gray-900">Fourth Link</a> -->
+            </nav>
+            <!-- Conditional Login/Logout Button -->
+            <a
+                class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-2xl mt-4 md:mt-0"
+                id="login_href"
+                href="./login"
+            >
+                Login
+                <!-- SVG Icon for Login/Logout -->
+                <svg
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    class="w-4 h-4 ml-1"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+    </header>
+    <!-- Header Ends -->
 
-    fetch("api/create_blog", {
-      method: "POST",  
-      headers: new Headers({'content-type': 'application/json'}),
-      body: JSON.stringify({ 
-        title: title,
-        short_desc: short_desc,
-        content: content,
-        image_url: image_url,
-        blog_url: title.replace(/ /g, "-").toLowerCase(),
-        author_uuid: localStorage.getItem("user_uuid"),
-        author_name: localStorage.getItem("user_name"),
-      }),
-    }).then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.status === "success") {
-          alert("Blog created successfully!");
-          window.location.href = "/";
-        } else {
-          alert("Error creating blog! \n Please Try again later");
-          alert(data.message);
-        } 
-      }).finally(() => {
-        create_blog_btn.disabled = false;
-      });
-  }
-</script>
-<script>
-  document.getElementById("content").addEventListener("input", function () {
-    document.querySelector(".preview-content").innerHTML = this.value;
-  });
-</script>
-{% endblock %}
+    <!-- Main Content Start -->
+    <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white antialiased">
+        <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+            <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue">
+                <header class="mb-4 lg:mb-6 not-format">
+                    <!-- Blog Post Image -->
+                    <img class="mr-4" src="{{ blog_data[6] }}" alt="{{ blog_data[1] }}" />
+                    <!-- Author and Blog Details -->
+                    <address class="flex items-center mb-6 not-italic">
+                        <div class="inline-flex items-center mr-3 text-sm text-gray-900">
+                            <div>
+                                <a href="#" rel="author" class="text-2xl font-bold text-gray-900">
+                                    By {{ blog_data[5] }}
+                                </a>
+                                <p class="text-lg text-gray-800 text-xl">
+                                    Views: <strong>{{ blog_data[9] }}</strong>
+                                </p>
+                                <p class="text-lg text-gray-500">
+                                    <time pubdate datetime="{{ blog_data[8] }}" title="{{ blog_data[8] }}">
+                                        {{ blog_data[8] }}
+                                    </time>
+                                </p>
+                            </div>
+                        </div>
+                    </address>
+                    <!-- Blog Post Title -->
+                    <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl">
+                        {{ blog_data[1] }}
+                    </h1>
+                </header>
+                <!-- Blog Post Content -->
+                <div class="content-div text-2xl">
+                    {{ blog_data[3] | safe }} <!-- Rendering blog content safely -->
+                </div>
+            </article>
+        </div>
+    </main>
+    <!-- Main Content Ends -->
+
+    <!-- JavaScript for Login/Logout Links -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the login/logout link element
+            var loginHref = document.getElementById("login_href");
+            
+            // Check the user's login status from local storage
+            var isLoggedIn = window.localStorage.getItem("user_isloggedin");
+
+            // Update the login link based on the login state
+            if (isLoggedIn === "true") {
+                loginHref.href = "/create_blog"; // Change link to "Create Blog" page
+                loginHref.innerHTML = "Create Blog"; // Update button text
+            } else {
+                loginHref.href = "./login"; // Default to login page
+                loginHref.innerHTML = "Login"; // Default button text
+            }
+        });
+    </script>
+</body>
+</html>
