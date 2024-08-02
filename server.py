@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template,request ,jsonify
 import mysql.connector
 import uuid
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__) 
 mysql_config = { 
@@ -90,23 +91,31 @@ def api_login():
 def api_signup():
     email = request.args.get('email')
     name = request.args.get('name')
-    password = request.args.get('password') 
-    if len(name) ==0 or len(email) == 0 or len(password) ==0:
-        return {"message":"Name , Email and Password are required","success":False} , 400
-    else:
-        user_uuid = str(uuid.uuid4())
+    password = request.args.get('password')
+
+    if not email or not name or not password:
+        return jsonify({"message": "Name, Email, and Password are required", "success": False}), 400
+
+    user_uuid = str(uuid.uuid4())
+    hashed_password = generate_password_hash(password)
+
+    try:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor()
-            mycursor.execute(f"SELECT * FROM `users` WHERE email = '{email}'")
+            mycursor.execute("SELECT * FROM `users` WHERE email = %s", (email,))
             user_data = mycursor.fetchone()
-            if user_data is not None:
-                return jsonify({"message":"Email Already Exists","success":False}) , 400
-            else: 
-                query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')"  
-                mycursor.execute(query)
-                mydb.commit()
-                
-                return jsonify({"message":"Signup Success","success":True,"uuid":user_uuid}) ,200 
+
+            if user_data:
+                return jsonify({"message": "Email Already Exists", "success": False}), 400
+
+            query = "INSERT INTO `users` (`username`, `uuid`, `email`, `password`) VALUES (%s, %s, %s, %s)"
+            mycursor.execute(query, (name, user_uuid, email, hashed_password))
+            mydb.commit()
+
+            return jsonify({"message": "Signup Success", "success": True}), 200
+
+    except mysql.connector.Error as err:
+        return jsonify({"message": str(err), "success": False}), 500
             
 
 @app.route('/api/create_blog', methods=['POST'])
