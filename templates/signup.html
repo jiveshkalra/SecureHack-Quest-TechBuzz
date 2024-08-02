@@ -73,7 +73,13 @@
         var email = document.getElementById("email").value;
         var name = document.getElementById("name").value;
         var password = document.getElementById("password").value;
-        fetch( "/api/signup?email=" + email + "&name=" +name + "&password=" +  password) 
+        fetch("/api/signup", {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: email, name: name, password: password })
+      })
           .then((res) => {return res.json(); })
           .then((res) => {
             if (res.success == true) {  
