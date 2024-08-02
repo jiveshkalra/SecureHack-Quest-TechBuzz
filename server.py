@@ -1,4 +1,5 @@
 from flask import Flask, redirect, render_template,request ,jsonify
+from voluptuous import Schema, Required
 import mysql.connector
 import uuid
 
@@ -111,23 +112,35 @@ def api_signup():
 
 @app.route('/api/create_blog', methods=['POST'])
 def api_create_blog():  
-    data = request.json
-    title = data.get('title')
-    content = data.get('content')
-    blog_url = data.get('blog_url')
-    short_desc = data.get('short_desc')
-    image_url = data.get('image_url')
-    author_uuid = data.get('author_uuid')
-    author_name = data.get('author_name')   
-    if len(title) ==0 or len(content) == 0 or len(blog_url) ==0 or len(short_desc) ==0 or len(image_url) ==0 or len(author_uuid) ==0 or len(author_name) ==0:
-        return jsonify({"message":"All fields are required","success":False}) , 400
-    else:
-        with mysql.connector.connect(**mysql_config) as mydb:
-            mycursor = mydb.cursor()
-            query = f"INSERT INTO `blogs` (`title`,`content`,`blog_url`, `short_desc`, `img_link`, `author_uuid`, `author_name`) VALUES ('{title}','{content}','{blog_url}', '{short_desc}', '{image_url}', '{author_uuid}', '{author_name}')"    
-            mycursor.execute(query)
-            mydb.commit()
-            return jsonify({"message":"Blog Created Successfully","success":True}) ,200
+    blog_schema = Schema({
+        Required('title'): All(str, Length(min=1)),
+        Required('content'): All(str, Length(min=1)),
+        Required('blog_url'): All(str, Length(min=1)),
+        Required('short_desc'): All(str, Length(min=1)),
+        Required('image_url'): All(str, Length(min=1)),
+        Required('author_uuid'): All(str, Length(min=1)),
+        Required('author_name'): All(str, Length(min=1))
+    })
+
+    try:
+        data = request.json
+        validated_data = blog_schema(data)
+        title = validated_data['title']
+        content = validated_data['content']
+        blog_url = validated_data['blog_url']
+        short_desc = validated_data['short_desc']
+        image_url = validated_data['image_url']
+        author_uuid = validated_data['author_uuid']
+        author_name = validated_data['author_name']
+    except Exception as e:
+        return jsonify({"message": str(e), "success": False}), 400
+
+    with mysql.connector.connect(**mysql_config) as mydb:
+        mycursor = mydb.cursor()
+        query = f"INSERT INTO `blogs` (`title`,`content`,`blog_url`, `short_desc`, `img_link`, `author_uuid`, `author_name`) VALUES ('{title}','{content}','{blog_url}', '{short_desc}', '{image_url}', '{author_uuid}', '{author_name}')"    
+        mycursor.execute(query)
+        mydb.commit()
+        return jsonify({"message":"Blog Created Successfully","success":True}) ,200
 
 @app.route('/api/admin/delete_blog', methods=['GET'])
 def api_delete_blog():
@@ -155,14 +168,29 @@ def api_fetch_blog_data_per_sno():
  
 @app.route('/api/admin/update_blog', methods=['POST'])
 def api_update_blog():
-    sno = request.json.get('sno')
-    title = request.json.get('title')
-    content = request.json.get('content')
-    blog_url = request.json.get('blog_url')
-    short_desc = request.json.get('short_desc')
-    image_url = request.json.get('image_url') 
-    author_name = request.json.get('author_name')
-    print(sno,title,content,blog_url,short_desc,image_url,author_name)
+    blog_schema = Schema({
+        Required('sno'): All(int),
+        Required('title'): All(str, Length(min=1)),
+        Required('content'): All(str, Length(min=1)),
+        Required('blog_url'): All(str, Length(min=1)),
+        Required('short_desc'): All(str, Length(min=1)),
+        Required('image_url'): All(str, Length(min=1)),
+        Required('author_name'): All(str, Length(min=1))
+    })
+
+    try:
+        data = request.json
+        validated_data = blog_schema(data)
+        sno = validated_data['sno']
+        title = validated_data['title']
+        content = validated_data['content']
+        blog_url = validated_data['blog_url']
+        short_desc = validated_data['short_desc']
+        image_url = validated_data['image_url']
+        author_name = validated_data['author_name']
+    except Exception as e:
+        return jsonify({"message": str(e), "success": False}), 400
+
     try:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor() 
@@ -171,7 +199,7 @@ def api_update_blog():
             mydb.commit()
             return jsonify({"message":"Blog Updated Successfully","success":True}) ,200
     except Exception as e:
-        return jsonify({"message":str(e),"success":False}) ,400  
+        return jsonify({"message":str(e),"success":False}) ,400
 
 
 
