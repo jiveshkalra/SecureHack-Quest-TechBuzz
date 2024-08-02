@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
-from markupsafe import escape
+from markupsafe import escape  # Updated for Cross-Site Scripting in blogs.html
 
 app = Flask(__name__)
 
@@ -65,14 +65,13 @@ def blog(blog_url):
             mycursor.execute("UPDATE blogs SET views = %s WHERE blog_url = %s", (new_views, blog_url))
             mydb.commit()
 
-        # Sanitize the content before passing it to the template
+        # Updated for Cross-Site Scripting in blogs.html
         sanitized_blog_data = [escape(data) for data in blog_data]
 
         return render_template('blogs.html', blog_data=sanitized_blog_data)
     except Exception as e:
         app.logger.error(f"Error occurred: {str(e)}")
         return redirect('/?error_code=serverdown')
-
 
 @app.route("/")
 def index():
@@ -84,7 +83,7 @@ def index():
 
 @app.route('/api/login', methods=['POST'])
 def api_login():
-    email = escape(request.form.get('email'))
+    email = escape(request.form.get('email')) # Updated for Cross-Site Scripting in blogs.html
     password = request.form.get('password')
 
     if not email or not password:
@@ -106,8 +105,8 @@ def api_login():
 
 @app.route('/api/signup', methods=['POST'])
 def api_signup():
-    email = escape(request.form.get('email'))
-    name = escape(request.form.get('name'))
+    email = escape(request.form.get('email')) # Updated for Cross-Site Scripting in blogs.html
+    name = escape(request.form.get('name')) # Updated for Cross-Site Scripting in blogs.html
     password = request.form.get('password')
 
     if not name or not email or not password:
@@ -132,7 +131,8 @@ def api_signup():
     
 @app.route('/api/create_blog', methods=['POST'])
 def api_create_blog():
-    data = request.json
+    data = request.json 
+    # Updated for Cross-Site Scripting in blogs.html
     title = escape(data.get('title'))
     content = escape(data.get('content'))
     blog_url = escape(data.get('blog_url'))
@@ -200,6 +200,7 @@ def api_fetch_blog_data_per_sno():
 def api_update_blog():
     try:
         data = request.json
+        # Updated for Cross-Site Scripting in blogs.html
         sno = escape(data.get('sno'))
         title = escape(data.get('title'))
         content = escape(data.get('content'))
