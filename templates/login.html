@@ -53,16 +53,20 @@
     </section>
  
     <script>
+
       function login_user(event) {
         event.preventDefault();
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        fetch("api/login?email=" + email + "&password=" + password)
+        fetch("api/login?email=" + email + "&password=" + password+"&method=post")
           .then((response) => {return response.json()})
           .then((data) => {
             if (data.success === true) {
               alert("Login Successful");
-              window.location.href = "/";
+              document.cookie = "user_email=" + encodeURIComponent(email) + ";path=/;Secure;SameSite=Strict;";
+              document.cookie = "user_uuid=" + encodeURIComponent(data.user_data[2]) + ";path=/;Secure;SameSite=Strict;";
+              document.cookie = "user_name=" + encodeURIComponent(data.user_data[1]) + ";path=/;Secure;SameSite=Strict;";
+              document.cookie = "user_isloggedin=true;path=/;Secure;SameSite=Strict;";
               window.localStorage.setItem("user_password", password);
               window.localStorage.setItem("user_isloggedin", "true");
               window.localStorage.setItem("user_email", email);
@@ -70,6 +74,7 @@
               user_name = data.user_data[1]
               window.localStorage.setItem("user_uuid", user_uuid);
               window.localStorage.setItem("user_name", user_name);
+              window.location.href = "/";
               
               // window.localStorage.setItem("email",]);
             } else {
