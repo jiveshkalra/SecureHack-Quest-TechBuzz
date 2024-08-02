@@ -5,9 +5,7 @@
       <form onsubmit="return signup_user(event)">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
-            <h1
-              class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-            >
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
               Welcome To Secure Hack Quest!
             </h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
@@ -16,51 +14,24 @@
             </p>
           </div>
           <div class="w-full sm:w-[50%] mx-auto">
-            <div class="">
-              <label for="email" class="leading-7 text-sm text-gray-600"
-                >Email</label
-              >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
+            <div>
+              <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+              <input type="email" id="email" name="email" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
-            <div class="">
-              <label for="name" class="leading-7 text-sm text-gray-600"
-                >Name</label
-              >
-              <input
-                type="text"
-                id="name"
-                name="name"
-                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
+            <div>
+              <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
+              <input type="text" id="name" name="name" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
-            <div class="">
-              <label for="password" class="leading-7 text-sm text-gray-600"
-                >Password</label
-              >
-              <input
-                type="password"
-                id="password"
-                name="password"
-                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
-              <span>Note : Please dont use your real passwords</span>
+            <div>
+              <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
+              <input type="password" id="password" name="password" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              <span>Note: Please don’t use your real passwords</span>
             </div>
             <br />
-            <button
-              class="-translate-x-1/2 mx-[50%] w-[45%] text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg"
-            >
+            <button class="-translate-x-1/2 mx-[50%] w-[45%] text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg">
               Sign Up
             </button>
-            <a
-              href="./login"
-              class="-translate-x-1/2 mx-[40%] w-[45%] text-sm underline"
-              >Or login</a
-            >
+            <a href="./login" class="-translate-x-1/2 mx-[40%] w-[45%] text-sm underline">Or login</a>
           </div>
         </div>
       </form>
@@ -68,34 +39,58 @@
     <!-- SIGN UP ENDS -->
  
     <script>
-      function signup_user(e) {
+      async function signup_user(e) {
         e.preventDefault();
-        var email = document.getElementById("email").value;
-        var name = document.getElementById("name").value;
-        var password = document.getElementById("password").value;
-        fetch( "/api/signup?email=" + email + "&name=" +name + "&password=" +  password) 
-          .then((res) => {return res.json(); })
-          .then((res) => {
-            if (res.success == true) {  
-              alert("Your account is created successfully!");
-              window.localStorage.setItem("user_email", email); 
-              window.localStorage.setItem("user_password", password); 
-              window.localStorage.setItem("user_name", name); 
-              window.localStorage.setItem("user_uuid", res.uuid); 
-              window.localStorage.setItem('user_isloggedin', 'true');
-              window.location.href = "/";
-              
-            } else {
-              var json = res.json().then((json) => {
-                alert(json["message"]);
-              });
-              alert("Something went wrong! Please try again.");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            alert("Something went wrong! Please try again.");
+        
+        const email = document.getElementById("email").value.trim();
+        const name = document.getElementById("name").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!email || !name || !password) {
+          alert("All fields are required!");
+          return;
+        }
+
+        const data = { email, name, password };
+        
+        try {
+          const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "CSRF-Token": "YOUR_CSRF_TOKEN_HERE"
+            },
+            body: JSON.stringify(data)
           });
+          
+          if (!response.ok) {
+            if (response.status === 400) {
+              alert("Bad Request. Please check your input.");
+            } else if (response.status === 401) {
+              alert("Unauthorized. Please check your credentials.");
+            } else if (response.status === 500) {
+              alert("Server error. Please try again later.");
+            } else {
+              alert("An unexpected error occurred. Please try again.");
+            }
+            return;
+          }
+          
+          const res = await response.json();
+
+          if (res.success) {
+            alert("Your account is created successfully!");
+            window.localStorage.setItem("user_name", name);
+            window.localStorage.setItem("user_uuid", res.uuid);
+            window.localStorage.setItem('user_isloggedin', 'true');
+            window.location.href = "/";
+          } else {
+            alert(res.message || "Something went wrong! Please try again.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Network error. Please check your internet connection and try again.");
+        }
       }
     </script>
 
