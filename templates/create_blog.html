@@ -96,10 +96,10 @@
 <script>
   function create_blog(e) {
     e.preventDefault();
-    const title = document.getElementById("title").value;
-    const short_desc = document.getElementById("short_desc").value;
-    const content = document.getElementById("content").value;
-    const image_url = document.getElementById("image_url").value;
+    const title = document.getElementById("title").value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const short_desc = document.getElementById("short_desc").value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const content = document.getElementById("content").value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const image_url = document.getElementById("image_url").value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     const create_blog_btn = document.getElementById("create_blog_btn");
     
     create_blog_btn.disabled = true;
