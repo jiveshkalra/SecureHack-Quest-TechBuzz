@@ -1,12 +1,6 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+{% block content %}
     <script>
-        localStorage.removeItem('user_email');
-        localStorage.removeItem('user_password');
-        localStorage.removeItem('user_isloggedin');
-        localStorage.removeItem('user_uuid');
-        localStorage.removeItem('user_name');
-        localStorage.removeItem('DidAdminLogInOnThisSystem'); 
-        window.location.href = '/';
+        window.location.href = '/logout';
     </script>
-
 {% endblock %}
