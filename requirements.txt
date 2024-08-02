@@ -1,2 +1,8 @@
 flask
 mysql-connector-python
+uuid
+dotenv
+os
+werkzeug.security
+markupsafe
+logging
