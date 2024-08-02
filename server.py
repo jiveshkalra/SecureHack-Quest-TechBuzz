@@ -4,10 +4,10 @@ import uuid
 
 app = Flask(__name__) 
 mysql_config = { 
-    "host":"sql12.freesqldatabase.com",
-    "user":"sql12722127",
-    "password":"kKVN6xFhI9",
-    "database":"sql12722127",
+    "host":"localhost",
+    "user":" root",
+    "password":"",
+    "database":"secure_hack_quest",
     "raise_on_warnings": True
 }
 
@@ -49,6 +49,7 @@ def blog(blog_url):
             mycursor = mydb.cursor() 
             mycursor.execute(f"SELECT * FROM blogs WHERE blog_url = '{blog_url}'")
             blog_data = mycursor.fetchone()  
+            print(blog_data[9])
             new_views = blog_data[9] +1
             mycursor.execute(f"UPDATE `blogs` SET `views` = {new_views} WHERE blog_url = '{blog_url}'")
             mydb.commit()
