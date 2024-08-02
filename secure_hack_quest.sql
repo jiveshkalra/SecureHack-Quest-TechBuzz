@@ -66,8 +66,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`sno`, `username`, `uuid`, `email`, `password`) VALUES
-(1, 'sdhga', 'eac2a7b3-e054-4b64-a528-913975446f15', 'jiveshkalra@c.dom', 'jhadsf');
+CREATE TABLE users (
+sno INT(11) NOT NULL AUTO_INCREMENT
 
 --
 -- Indexes for dumped tables
