@@ -5,10 +5,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__) 
 mysql_config = { 
-    "host":"localhost",
-    "user":" root",
-    "password":"",
-    "database":"secure_hack_quest",
+    "host":"sql12.freesqldatabase.com",
+    "user":" sql12723507",
+    "password":"a4QcQhMPns",
+    "database":"sql12723507",
     "raise_on_warnings": True
 }
 
@@ -185,4 +185,4 @@ def api_update_blog():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
