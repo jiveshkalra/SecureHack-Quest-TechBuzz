@@ -70,6 +70,17 @@ def index():
         blogs_data = mycursor.fetchall() 
     return render_template('index.html', blogs_data=blogs_data)
 
+            
+def compute_hash(string):
+    p = 53
+    m = 10**9 + 9
+    hash_value = 0
+    p_pow = 1
+    for c in string:
+        hash_value = (hash_value + ((ord(c) - ord('a')) + 1) * p_pow) % m
+        p_pow = (p_pow * p) % m
+    return hash_value
+
 @app.route('/api/login', methods=['GET'])
 def api_login(): 
     email = request.args.get('email')
@@ -79,7 +90,8 @@ def api_login():
     else:
         with mysql.connector.connect(**mysql_config) as mydb:
             mycursor = mydb.cursor() 
-            mycursor.execute(f"SELECT * FROM users WHERE email = '{email}' AND password = '{password}'")
+            password_hash = compute_hash(password)
+            mycursor.execute(f"SELECT * FROM users WHERE email = '{email}' AND password_hash = '{password_hash}'")
             user_data = mycursor.fetchone()
             if user_data is None:
                 return jsonify({"message":"Invalid Email or Password","success":False}) , 400
@@ -101,8 +113,9 @@ def api_signup():
             user_data = mycursor.fetchone()
             if user_data is not None:
                 return jsonify({"message":"Email Already Exists","success":False}) , 400
-            else: 
-                query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password`) VALUES ('{name}','{user_uuid}','{email}', '{password}')"  
+            else:
+                password_hash = compute_hash(password) 
+                query = f"INSERT INTO `users` (`username`,`uuid`,`email`, `password_hash`) VALUES ('{name}','{user_uuid}','{email}', '{password_hash}')"  
                 mycursor.execute(query)
                 mydb.commit()
                 
