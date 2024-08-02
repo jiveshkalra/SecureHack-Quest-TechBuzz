@@ -9,12 +9,9 @@
       if (window.location.href == window.location.origin + "/admin/login") {
       } else {
         if (
-          new URLSearchParams(location.search).get("passcode") != "CongratulationsYouFoundSomething" &&
-          window.localStorage.getItem("DidAdminLogInOnThisSystem") != "TRUE"
+          new URLSearchParams(location.search).get("passcode") != "CongratulationsYouFoundSomething"
         ) {
           window.location = window.location.origin + "/admin/login";
-        } else {
-          window.localStorage.setItem("DidAdminLogInOnThisSystem", "TRUE");
         }
       }
     </script>
