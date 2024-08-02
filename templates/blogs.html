@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'https://trusted.cdn.com'; style-src 'self' 'https://trusted.cdn.com';">
     <script src="https://cdn.tailwindcss.com"></script>
     <title> {{blog_data[1]}}</title>
 </head>
@@ -86,8 +87,8 @@ blog_data[8] # timestamp
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl  ">{{blog_data[1]}}</h1>
             </header> 
             <div class="content-div text-2xl ">
-                {{ blog_data[3] | safe }} 
-            </div>
+              {{ blog_data[3]|escape }}
+          </div>          
         </article>
     </div>
   </main> 
