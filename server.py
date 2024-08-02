@@ -129,7 +129,10 @@ def api_create_blog():
             mydb.commit()
             return jsonify({"message":"Blog Created Successfully","success":True}) ,200
 
-@app.route('/api/admin/delete_blog', methods=['GET'])
+@app.route('/api/admin/delete_blog', methods=['POST'])
+def api_delete_blog():
+    blog_id = request.json.get('blog_id')
+
 def api_delete_blog():
     try:
         blog_id = request.args.get('blog_id')
@@ -176,4 +179,5 @@ def api_update_blog():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
+
