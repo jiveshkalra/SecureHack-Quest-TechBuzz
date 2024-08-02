@@ -1,9 +1,9 @@
 {% extends "admin/base.html" %} {% block content %}  
   <div class="block border shadow-xl m-auto w-[70vw]">
-    <form action="/admin/">
+    <form action="/admin/" method="post">
       <h1 class="text-center text-2xl font-bold p-4 m-4">Enter The password to access the admin panel</h1>
       <p for="passcode" class="p-4 text-xl ">Please Enter the admin access call code:</p><br>
-      <input type="text" name="passcode" id="passcode" placeholder="Password...."
+      <input type="password" name="passcode" id="passcode" placeholder="Password...."
         class="p-4 rounded-xl w-[90%] bg-gray-200 mx-[50%] -translate-x-1/2 mt-0 mb-4"><br>
       <button type="submit"
         class="bg-teal-500 p-2 rounded-xl text-white px-4 w-[40%] mx-[50%] -translate-x-1/2 my-4">Take Me To Admin Page
