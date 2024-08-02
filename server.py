@@ -231,6 +231,3 @@ def api_update_blog():
 
 if __name__ == "__main__":
     app.run()
-
-if __name__ == "__main__":
-    app.run(debug=True)
