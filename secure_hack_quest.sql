@@ -102,6 +102,81 @@ ALTER TABLE `users`
   MODIFY `sno` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
+
+CREATE TABLE `archived_blogs` (
+  `s.no` int(255) NOT NULL,
+  `title` text NOT NULL,
+  `short_desc` text NOT NULL,
+  `content` longtext NOT NULL,
+  `author_uuid` varchar(255) NOT NULL,
+  `author_name` varchar(255) NOT NULL,
+  `img_link` text NOT NULL,
+  `blog_url` varchar(255) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `views` int(255) NOT NULL DEFAULT 0,
+  PRIMARY KEY (s.no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE archived_users (
+  `sno` int(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `uuid` text NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` text NOT NULL,
+  PRIMARY KEY (sno)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO archived_blogs (s.no, title, short_desc, content, author_uuid, author_name, img_link, blog_url, timestamp, views)
+SELECT s.no, title, short_desc, content, author_uuid, author_name, img_link, blog_url, timestamp, views
+FROM blogs
+WHERE timestamp < NOW() - INTERVAL 6 MONTH;
+
+DELETE FROM blogs
+WHERE timestamp < NOW() - INTERVAL 6 MONTH;
+
+INSERT INTO archived_users (sno, username, uuid, email, password)
+SELECT sno, username, uuid, email, password
+FROM users
+WHERE last_login < NOW() - INTERVAL 1 YEAR;
+
+DELETE FROM users
+WHERE last_login < NOW() - INTERVAL 3 YEAR;
+
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table blogs
+--
+ALTER TABLE blogs
+  ADD PRIMARY KEY (s.no);
+
+--
+-- Indexes for table users
+--
+ALTER TABLE users
+  ADD PRIMARY KEY (sno);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table blogs
+--
+ALTER TABLE blogs
+  MODIFY s.no int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table users
+--
+ALTER TABLE users
+  MODIFY sno int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
