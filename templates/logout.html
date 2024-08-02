@@ -1,12 +1,19 @@
 {% extends "base.html" %} {% block content %}
     <script>
-        localStorage.removeItem('user_email');
-        localStorage.removeItem('user_password');
-        localStorage.removeItem('user_isloggedin');
-        localStorage.removeItem('user_uuid');
-        localStorage.removeItem('user_name');
-        localStorage.removeItem('DidAdminLogInOnThisSystem'); 
-        window.location.href = '/';
-    </script>
+        function handleLogout() {
+            localStorage.removeItem('user_email');
+            localStorage.removeItem('user_password'); // Removed from previous fix
+            localStorage.removeItem('user_isloggedin');
+            localStorage.removeItem('user_uuid');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('DidAdminLogInOnThisSystem');
 
+            alert("You have been logged out successfully.");
+
+            window.location.href = '/';
+        }
+
+        handleLogout();
+    </script>
 {% endblock %}
+
