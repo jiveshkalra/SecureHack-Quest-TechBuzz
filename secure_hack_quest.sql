@@ -59,15 +59,15 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `uuid` text NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` text NOT NULL
+  `password_hash` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`sno`, `username`, `uuid`, `email`, `password`) VALUES
-(1, 'sdhga', 'eac2a7b3-e054-4b64-a528-913975446f15', 'jiveshkalra@c.dom', 'jhadsf');
+INSERT INTO `users` (`sno`, `username`, `uuid`, `email`, `password_hash`) VALUES
+(1, 'sdhga', 'eac2a7b3-e054-4b64-a528-913975446f15', 'jiveshkalra@c.dom', 228471892);
 
 --
 -- Indexes for dumped tables
@@ -77,13 +77,13 @@ INSERT INTO `users` (`sno`, `username`, `uuid`, `email`, `password`) VALUES
 -- Indexes for table `blogs`
 --
 ALTER TABLE `blogs`
-  ADD PRIMARY KEY (`s.no`);
+ADD PRIMARY KEY (`s.no`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`sno`);
+ADD PRIMARY KEY (`sno`);
 
 --
 -- AUTO_INCREMENT for dumped tables
