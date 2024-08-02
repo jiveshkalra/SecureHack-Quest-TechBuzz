@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2024 at 06:19 AM
+-- Generation Time: Aug 02, 2024 at 06:37 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,7 +36,7 @@ CREATE TABLE `blogs` (
   `author_name` varchar(255) NOT NULL,
   `img_link` text NOT NULL,
   `blog_url` varchar(255) NOT NULL,
-  `timestamp` datetime NOT NULL DEFAULT current_timestamp(),
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `views` int(255) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -45,7 +45,8 @@ CREATE TABLE `blogs` (
 --
 
 INSERT INTO `blogs` (`s.no`, `title`, `short_desc`, `content`, `author_uuid`, `author_name`, `img_link`, `blog_url`, `timestamp`, `views`) VALUES
-(1, 'Test', '# Test', 'test', 'Testat', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqQXCfw2Ulfrfe1xG2NGkSe7FOnT0h9AEjcQ&s', 'eac2a7b3-e054-4b64-a528-913975446f15', 'sdhga', '2024-08-02 09:41:28', 0);
+(3, 'Test', 'Testat', '# Test', 'eac2a7b3-e054-4b64-a528-913975446f15', 'sdhga', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqQXCfw2Ulfrfe1xG2NGkSe7FOnT0h9AEjcQ&s', 'test', '2024-08-02 04:28:56', 3),
+(4, 'Testtt', 'test', 'testtt', 'eac2a7b3-e054-4b64-a528-913975446f15', 'sdhga', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqQXCfw2Ulfrfe1xG2NGkSe7FOnT0h9AEjcQ&s', 'testtt', '2024-08-02 04:36:00', 0);
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `s.no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `s.no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
